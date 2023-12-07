@@ -5,10 +5,12 @@
 template<typename pointer_type>
 using SP = std::shared_ptr<pointer_type>;
 
+/* A class describing the simplest binary tree */
 template<typename key_type, typename value_type>
 requires std::is_copy_constructible_v<key_type> and (std::is_integral_v<key_type> or std::is_floating_point_v<key_type>)
 class BinaryTree final {
 
+    /* The structure of a single node */
     struct TreeNode {
         key_type key;
         value_type value;
@@ -19,6 +21,7 @@ class BinaryTree final {
     std::size_t tree_size = 0;
     SP<TreeNode> root = nullptr;
 
+    /* Creating a separate tree node */
     SP<TreeNode> make_node(key_type key, value_type value) noexcept {
         SP<TreeNode> new_node = std::make_shared<TreeNode>();
         new_node->key = key;
@@ -26,6 +29,7 @@ class BinaryTree final {
         return new_node;
     }
 
+    /* A recursive function for adding tree nodes to the desired location */
     void recursion_push(SP<TreeNode> current_node, key_type key, value_type value) noexcept {
         if (key < current_node->key) {
             if (current_node->left == nullptr) {
@@ -43,24 +47,28 @@ class BinaryTree final {
         }
     }
 
+    /* Recursive minimum search */
     SP<TreeNode> recursion_min(SP<TreeNode> current_node) noexcept {
         if (current_node == nullptr) [[unlikely]] return nullptr;
         if (current_node->left == nullptr) return current_node;
         return recursion_max(current_node->left);
     }
 
+    /* Recursive maximum search */
     SP<TreeNode> recursion_max(SP<TreeNode> current_node) noexcept {
         if (current_node == nullptr) [[unlikely]] return current_node;
         if (current_node->right == nullptr) return current_node;
         return recursion_max(current_node->right);
     }
 
+    /* Search for a specific node of the tree by key */
     SP<TreeNode>& recursion_search(SP<TreeNode>& current_node, key_type key) noexcept {
         if (current_node == nullptr) [[unlikely]] return current_node;
         if (current_node->key == key) return current_node;
         return (key < current_node->key) ? recursion_search(current_node->left, key) : recursion_search(current_node->right, key);
     }
 
+    /* Recursive removal of a tree node */
     void recursion_delete(SP<TreeNode>& current_node, key_type key) {
         if (current_node == nullptr) [[unlikely]] throw std::runtime_error("ATTENTION -> There is no such key in the binary tree!");
         else if (key < current_node->key) recursion_delete(current_node->left, key);
@@ -78,6 +86,7 @@ class BinaryTree final {
         }
     }
 
+    /* Full recursive tree traversal */
     void print_tree(SP<TreeNode>& current_node) noexcept {
         if (current_node == nullptr) return;    
         print_tree(current_node->left);
@@ -120,12 +129,14 @@ class BinaryTree final {
             return *this;
         }
 
+        /* operator  [] overloading */
         value_type& operator[](key_type key) {
             SP<TreeNode> correct_node = recursion_search(root, key);
             if (correct_node == nullptr) throw std::runtime_error("ATTENTION -> There is no such key in the binary tree!");
             return correct_node->value;
         }
 
+        /* Overloading the standard output stream */
         friend std::ostream& operator<<(std::ostream& stream, BinaryTree& object) noexcept {
             if (object.tree_size == 0) std::cout << "nullptr";
             object.print_tree(object.root);
@@ -138,10 +149,22 @@ int main(int argc, char** argv) {
 
     BinaryTree<int, std::string> my_tree;
 
+    /* Adding pairs to the tree */
     my_tree.push(70, "70").push(50, "50").push(45, "45").push(61, "61").push(80, "80").push(79, "79").push(92, "92");
 
-    my_tree.erase(79).erase(50);
-    
+    /* Output of the maximum and minimum among the values */
+    std::cout << "min: " << my_tree.min() << std::endl;
+    std::cout << "max: " << my_tree.max() << std::endl;
+
+    /* Removing the maximum node */
+    my_tree.erase(92);
+
+    std::cout << "max after erase: " << my_tree.max() << std::endl;
+
+    /* Accessing the node value by key using the [] operator */
+    std::cout<< my_tree[45] << std::endl;
+
+    /* Ordered tree output */
     std::cout << my_tree << std::endl;
 
     return 0;
