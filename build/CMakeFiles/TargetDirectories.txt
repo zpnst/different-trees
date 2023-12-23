@@ -1,0 +1,4 @@
+/home/zpnst/Documents/Programming/cpp/Projects/different-trees/build/CMakeFiles/comparison.dir
+/home/zpnst/Documents/Programming/cpp/Projects/different-trees/build/CMakeFiles/different_trees.dir
+/home/zpnst/Documents/Programming/cpp/Projects/different-trees/build/CMakeFiles/edit_cache.dir
+/home/zpnst/Documents/Programming/cpp/Projects/different-trees/build/CMakeFiles/rebuild_cache.dir

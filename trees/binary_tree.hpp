@@ -1,4 +1,5 @@
 # include <memory>
+# include <vector>
 # include <cstdint>
 # include <iostream>
 
@@ -10,6 +11,8 @@ class binary_tree final {
     struct tree_node {
         key_type key;
         value_type value; 
+        std::int64_t height;
+        std::int64_t balance;
         std::shared_ptr<tree_node> left = nullptr;
         std::shared_ptr<tree_node> right = nullptr;
     };
@@ -21,7 +24,27 @@ class binary_tree final {
         std::shared_ptr<tree_node> new_tree_node = std::make_shared<tree_node>();
         new_tree_node->key = key;
         new_tree_node->value = value;
+        new_tree_node->height = 0;
+        new_tree_node->balance = 0;
         return new_tree_node;
+    }
+
+    inline std::int64_t get_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
+        if (current_node == nullptr) return -1;
+        return current_node->height;
+    }
+
+    inline std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
+        if (current_node == nullptr) return 0;
+        return (current_node->right ? current_node->right->height : -1) - (current_node->left ? current_node->left->height : -1);
+    }
+
+    void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
+        current_node->height = std::max(get_node_height(current_node->right), get_node_height(current_node->left)) + 1;
+    }
+
+    void update_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
+        current_node->balance = get_node_balance(current_node);
     }
 
     std::shared_ptr<tree_node> rec_get_max_pair(std::shared_ptr<tree_node> current_root) noexcept {
@@ -59,13 +82,10 @@ class binary_tree final {
             }
             else rec_push_pair(current_node->right, key, value);
         }
-    }
-
-    void rec_print_tree(std::shared_ptr<tree_node> current_root) noexcept {
-        if (current_root->left != nullptr) rec_print_tree(current_root->left);
-        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << current_root->value;
-        else std::cout << current_root->value << " --> ";
-        if (current_root->right != nullptr) rec_print_tree(current_root->right);
+        if (current_node != nullptr) {
+            update_node_height(current_node); 
+            update_node_balance(current_node);
+        }
     }
 
     void rec_delete_pair_by_key(std::shared_ptr<tree_node>& current_node, key_type key) noexcept {
@@ -82,8 +102,19 @@ class binary_tree final {
                 rec_delete_pair_by_key(current_node->left, max_of_mins->key);
             }
         }
+        if (current_node != nullptr) {
+            update_node_height(current_node); 
+            update_node_balance(current_node);
+        }
     }
 
+    void rec_print_tree(std::shared_ptr<tree_node> &current_root) noexcept {
+        if (current_root->left != nullptr) rec_print_tree(current_root->left);
+        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", " << current_root->height << ", " << current_root->balance << ")";
+        else std::cout << "(" << current_root->value << ", " << current_root->height << ", " << current_root->balance << ")" << " --> ";
+        if (current_root->right != nullptr) rec_print_tree(current_root->right);
+    }
+    
     public:
 
         binary_tree(void) = default;
@@ -148,34 +179,3 @@ class binary_tree final {
             return tree_size;
         }
 };
-
-
-int main(int argc, char **argv) {
-
-    binary_tree<std::int64_t, std::string> tree;
-
-    tree.push_pair(10, "a10").push_pair(20, "b20").push_pair(30, "c30").push_pair(5, "d5").push_pair(7, "e7").push_pair(8, "f8").push_pair(6, "g6").push_pair(19, "h19");
-    
-    std::cout << "max value: " << tree.get_max() << std::endl;
-    std::cout << "min value: " << tree.get_min() << std::endl;
-
-    std::cout << "value by key 19: " << tree.serach_by_key(19) << std::endl;
-    
-    tree.print_tree();
-    std::cout << std::endl;
-
-    std::cout << "tree size: " << tree.get_size() << std::endl;
-
-    tree.erase(8);
-
-    tree.print_tree();
-    std::cout << std::endl;
-
-    std::cout << "tree[20]: " << tree[20] << std::endl;
-
-    std::cout << tree << std::endl;
-
-    std::cout << "tree size: " << tree.get_size() << std::endl;
-    
-    return 0;
-}
