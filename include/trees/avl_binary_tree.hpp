@@ -1,9 +1,7 @@
 # include <cmath>
 # include <memory>
-# include <vector>
 # include <cstdint>
 # include <iostream>
-
 
 
 template<typename key_type, typename value_type>
