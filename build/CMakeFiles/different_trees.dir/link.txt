@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdifferent_trees.a "CMakeFiles/different_trees.dir/comparison-of-trees/comparison.cpp.o"
-/usr/bin/ranlib libdifferent_trees.a

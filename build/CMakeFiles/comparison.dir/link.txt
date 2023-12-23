@@ -1,1 +1,0 @@
-/usr/bin/c++ "CMakeFiles/comparison.dir/comparison-of-trees/comparison.cpp.o" -o comparison  libdifferent_trees.a 
