@@ -1,8 +1,10 @@
 
+# include <vector>
 # include <cstdint>
 # include <iostream>
 # include <trees/binary_tree.hpp>
 # include <trees/avl_binary_tree.hpp>
+# include <trees/red_black_tree.hpp>
 
 
 int main(int argc, char **argv) {
