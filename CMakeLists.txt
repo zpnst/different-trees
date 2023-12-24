@@ -6,7 +6,10 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(comparison "comparison-of-trees/comparison.cpp")
 
-file(GLOB ${PROJECT_NAME}_HEADERS "trees/*.hpp" "trees/*/*.hpp")
+file(GLOB ${PROJECT_NAME}_HEADERS "binary-tree/*.hpp" "binary-tree/*/*.hpp")
+file(GLOB ${PROJECT_NAME}_HEADERS "red-black-tree/*.hpp" "red-black-tree/*/*.hpp")
+file(GLOB ${PROJECT_NAME}_HEADERS "avl-binary-tree/*.hpp" "avl-binary-tree/*/*.hpp")
+
 file(GLOB ${PROJECT_NAME}_SOURCES "comparison-of-trees/*.cpp" "comparison-of-trees/*/*.cpp")
 
 add_library(${PROJECT_NAME} 
@@ -14,6 +17,6 @@ add_library(${PROJECT_NAME}
             ${${PROJECT_NAME}_SOURCES})
 
 target_include_directories(${PROJECT_NAME} 
-                            PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+                            PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/trees>)
 
 target_link_libraries(comparison PRIVATE ${PROJECT_NAME})

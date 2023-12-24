@@ -2,9 +2,9 @@
 # include <vector>
 # include <cstdint>
 # include <iostream>
-# include <trees/binary_tree.hpp>
-# include <trees/avl_binary_tree.hpp>
-# include <trees/red_black_tree.hpp>
+# include <binary-tree/tree.hpp>
+# include <red-black-tree/tree.hpp>
+# include <avl-binary-tree/tree.hpp>
 
 
 int main(int argc, char **argv) {
