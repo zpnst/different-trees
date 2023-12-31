@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(comparison "comparison-of-trees/comparison.cpp")
 
+file(GLOB ${PROJECT_NAME}_HEADERS "splay-tree/*.hpp" "splay-tree/*/*.hpp")
 file(GLOB ${PROJECT_NAME}_HEADERS "binary-tree/*.hpp" "binary-tree/*/*.hpp")
 file(GLOB ${PROJECT_NAME}_HEADERS "red-black-tree/*.hpp" "red-black-tree/*/*.hpp")
 file(GLOB ${PROJECT_NAME}_HEADERS "avl-binary-tree/*.hpp" "avl-binary-tree/*/*.hpp")

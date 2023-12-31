@@ -2,6 +2,7 @@
 # include <vector>
 # include <cstdint>
 # include <iostream>
+# include <splay-tree/tree.hpp>
 # include <binary-tree/tree.hpp>
 # include <red-black-tree/tree.hpp>
 # include <avl-binary-tree/tree.hpp>
