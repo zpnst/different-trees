@@ -8,7 +8,7 @@
    the red node always has two black children */
 
 enum node_colors {
-    red_node, black_node
+    red_color, black_color
 };
 
 template<typename key_type, typename value_type>
@@ -53,7 +53,7 @@ class red_black_tree final {
         new_tree_node->value = value;
         new_tree_node->height = 0;
         new_tree_node->balance = 0;
-        new_tree_node->color = red_node;
+        new_tree_node->color = red_color;
         return new_tree_node;
     }
 
@@ -101,9 +101,3 @@ class red_black_tree final {
         red_black_tree(void) = default;
         ~red_black_tree(void) = default;
 };  
-
-int main(int argc, char **argv) {
-
-    red_black_tree<std::int64_t, std::string> tree;
-    return 0;
-}
