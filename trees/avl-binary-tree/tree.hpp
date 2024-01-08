@@ -12,7 +12,6 @@ class avl_binary_tree final {
         key_type key;
         value_type value; 
         std::int64_t height;
-        std::int64_t balance;
         std::shared_ptr<tree_node> left = nullptr;
         std::shared_ptr<tree_node> right = nullptr;
     };
@@ -25,26 +24,16 @@ class avl_binary_tree final {
         new_tree_node->key = key;
         new_tree_node->value = value;
         new_tree_node->height = 0;
-        new_tree_node->balance = 0;
         return new_tree_node;
     }
 
-    inline std::int64_t get_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
-        if (current_node == nullptr) return -1;
-        return current_node->height;
+    inline void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
+        current_node->height = std::max(current_node->right == nullptr ? -1 : current_node->right->height, current_node->left == nullptr ? -1 : current_node->left->height) + 1;
     }
 
     inline std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
         if (current_node == nullptr) return 0;
         return (current_node->right ? current_node->right->height : -1) - (current_node->left ? current_node->left->height : -1);
-    }
-
-    void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
-        current_node->height = std::max(get_node_height(current_node->right), get_node_height(current_node->left)) + 1;
-    }
-
-    void update_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
-        current_node->balance = get_node_balance(current_node);
     }
 
     [[nodiscard]] std::shared_ptr<tree_node> rec_get_max_pair(std::shared_ptr<tree_node> &current_root) noexcept {
@@ -85,8 +74,6 @@ class avl_binary_tree final {
         current_node->right->right = temporary_node;
         update_node_height(current_node->right);
         update_node_height(current_node);
-        update_node_balance(current_node->right);
-        update_node_balance(current_node);
     }
 
     void left_rotation(std::shared_ptr<tree_node> &current_node) noexcept {
@@ -98,8 +85,6 @@ class avl_binary_tree final {
         current_node->left->left = temporary_node;
         update_node_height(current_node->left);
         update_node_height(current_node);
-        update_node_balance(current_node->left);
-        update_node_balance(current_node);
     }
 
     void balance_tree_node(std::shared_ptr<tree_node> &current_node) noexcept {
@@ -132,7 +117,6 @@ class avl_binary_tree final {
         }
         if (current_node != nullptr) {
             update_node_height(current_node); 
-            update_node_balance(current_node);
             balance_tree_node(current_node);
         }
     }
@@ -153,15 +137,14 @@ class avl_binary_tree final {
         }
         if (current_node != nullptr) {
             update_node_height(current_node); 
-            update_node_balance(current_node);
             balance_tree_node(current_node);
         }
     }
 
     void rec_print_tree(std::shared_ptr<tree_node> &current_root) noexcept {
         if (current_root->left != nullptr) rec_print_tree(current_root->left);
-        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", " << current_root->height << ", " << current_root->balance << ")";
-        else std::cout << "(" << current_root->value << ", " << current_root->height << ", " << current_root->balance << ")" << " --> ";
+        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")";
+        else std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")" << " --> ";
         if (current_root->right != nullptr) rec_print_tree(current_root->right);
     }
 
