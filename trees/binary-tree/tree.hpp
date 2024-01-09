@@ -11,7 +11,7 @@ class binary_tree final {
     struct tree_node {
         key_type key;
         value_type value; 
-        std::int64_t height;
+        std::int8_t height;
         std::shared_ptr<tree_node> left = nullptr;
         std::shared_ptr<tree_node> right = nullptr;
     };
@@ -59,18 +59,18 @@ class binary_tree final {
     void rec_push_pair(std::shared_ptr<tree_node> current_node, key_type key, value_type value) noexcept {
         if (key < current_node->key) {
             if (current_node->left == nullptr) {
-                std::shared_ptr<tree_node> new_tree_node = create_tree_node(key, value);
-                current_node->left = new_tree_node;
+                current_node->left = create_tree_node(key, value);
             }
             else rec_push_pair(current_node->left, key, value);
         }
-        else if (key >= current_node->key) {
+        else if (key > current_node->key) {
             if (current_node->right == nullptr) {
-                std::shared_ptr<tree_node> new_tree_node = create_tree_node(key, value);
-                current_node->right = new_tree_node;
+                current_node->right = create_tree_node(key, value);
             }
             else rec_push_pair(current_node->right, key, value);
         }
+        else current_node->value = value;
+        
         if (current_node != nullptr) {
             update_node_height(current_node); 
         }
@@ -96,10 +96,11 @@ class binary_tree final {
     }
 
     void recursion_print_tree(std::shared_ptr<tree_node> &current_root) noexcept {
-        if (current_root->left != nullptr) recursion_print_tree(current_root->left);
+        if (!current_root) return;
+        recursion_print_tree(current_root->left);
         if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")";
         else std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")" << " --> ";
-        if (current_root->right != nullptr) recursion_print_tree(current_root->right);
+        recursion_print_tree(current_root->right);
     }
     
     public:
