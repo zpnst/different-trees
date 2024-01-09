@@ -130,7 +130,6 @@ class splay_tree final {
             else {
                 current_node->parent = right_rotation(current_node->parent->parent);
                 current_node = right_rotation(current_node->parent);
-
                 splay_current_node(current_node);
                 return;
             }
@@ -146,7 +145,6 @@ class splay_tree final {
             else {
                 current_node->parent = left_rotation(current_node->parent->parent);
                 current_node = left_rotation(current_node->parent);
-
                 splay_current_node(current_node);
                 return;
             }
