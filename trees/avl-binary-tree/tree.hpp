@@ -141,11 +141,11 @@ class avl_binary_tree final {
         }
     }
 
-    void rec_print_tree(std::shared_ptr<tree_node> &current_root) noexcept {
-        if (current_root->left != nullptr) rec_print_tree(current_root->left);
-        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")";
+    void recursion_print_tree(std::shared_ptr<tree_node> &current_root) noexcept {
+        if (current_root->left != nullptr) recursion_print_tree(current_root->left);
+        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", h" << current_root->height << ", b" << get_node_balance(current_root) << ")";
         else std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")" << " --> ";
-        if (current_root->right != nullptr) rec_print_tree(current_root->right);
+        if (current_root->right != nullptr) recursion_print_tree(current_root->right);
     }
 
     public:
@@ -180,12 +180,29 @@ class avl_binary_tree final {
             return correct_node->value;
         }
 
-        avl_binary_tree& print_tree() noexcept {
+        avl_binary_tree& order_print() noexcept {
             if (tree_root == nullptr) {
                 std::cout << "nullptr";
                 return *this;
             }
-            rec_print_tree(tree_root);
+            recursion_print_tree(tree_root);
+            return *this;
+        }
+
+        avl_binary_tree& level_oreder_print() noexcept {
+
+            std::queue<std::shared_ptr<tree_node>> node_queue;
+            if (tree_root) node_queue.push(tree_root);
+
+            while (!node_queue.empty()) {
+                std::shared_ptr<tree_node> temporary_node = node_queue.front();
+                node_queue.pop();
+
+                if (temporary_node->left) node_queue.push(temporary_node->left);
+                if (temporary_node->right) node_queue.push(temporary_node->right);
+
+                std::cout << "(" << temporary_node->value << ", " << temporary_node->height << ", " << get_node_balance(temporary_node) << ")" << (!node_queue.empty() ? " --> " : "\n");
+            }
             return *this;
         }
 
@@ -202,7 +219,7 @@ class avl_binary_tree final {
                 std::cout << "nullptr";
                 return stream;
             }
-            tree_object.print_tree();
+            tree_object.order_print();
             return stream;
         }
 

@@ -23,10 +23,17 @@ int main(int argc, char **argv) {
 
     std::cout << "\nWe have (1, 2, 3), where\n1 - node value\n2 - node height\n3 - node balance\n\n" << std::endl;
     
-    std::cout << "Binary Tree:" << std::endl;
+    std::cout << "Binary Tree:\n" << std::endl;
+    std::cout << "Order print:" << std::endl;
     std::cout << bin_tree << "\n" << std::endl;
+    std::cout << "Level order print:" << std::endl;
+    bin_tree.level_oreder_print();
 
-    std::cout << "AVL Binary Tree:" << std::endl;
-    std::cout << avl_bin_tree << std::endl;
+    std::cout << "\n\nAVL Binary Tree:\n" << std::endl;
+    std::cout << "Order print:" << std::endl;
+    std::cout << avl_bin_tree << "\n" << std::endl;
+    std::cout << "Level order print:" << std::endl;
+    avl_bin_tree.level_oreder_print();
+
     return 0;
 }
