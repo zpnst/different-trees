@@ -27,11 +27,11 @@ class binary_tree final {
         return new_tree_node;
     }
 
-    inline void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
+    void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
         current_node->height = std::max(current_node->right == nullptr ? -1 : current_node->right->height, current_node->left == nullptr ? -1 : current_node->left->height) + 1;
     }
 
-    inline std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
+    std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
         if (current_node == nullptr) return 0;
         return (current_node->right ? current_node->right->height : -1) - (current_node->left ? current_node->left->height : -1);
     }
@@ -80,7 +80,7 @@ class binary_tree final {
         if (key < current_node->key) rec_delete_pair_by_key(current_node->left, key);
         else if (key > current_node->key) rec_delete_pair_by_key(current_node->right, key);
         else {
-            if (current_node->right == nullptr || current_node->left == nullptr) {
+            if (current_node->right == nullptr or current_node->left == nullptr) {
                 current_node->right == nullptr ? current_node = current_node->left : current_node = current_node->right;
             }
             else {
@@ -176,11 +176,11 @@ class binary_tree final {
             return stream;
         }
 
-        inline value_type& operator[](key_type key) noexcept {
+        value_type& operator[](key_type key) noexcept {
             return serach_by_key(key);
         }
 
-        inline std::size_t get_size() noexcept {
+        std::size_t get_size() noexcept {
             return tree_size;
         }
 };

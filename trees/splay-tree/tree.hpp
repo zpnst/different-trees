@@ -20,15 +20,11 @@ class splay_tree final {
     std::size_t tree_size = 0;
     std::shared_ptr<tree_node> tree_root = nullptr;
 
-    [[nodiscard]] inline bool if_node_leaf(std::shared_ptr<tree_node> &current_node) noexcept {
-        return (!current_node->right && !current_node->left);
-    }
-
-    inline void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
+    void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
         current_node->height = std::max(current_node->right == nullptr ? -1 : current_node->right->height, current_node->left == nullptr ? -1 : current_node->left->height) + 1;
     }
 
-    inline std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
+    std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
         if (current_node == nullptr) return 0;
         return (current_node->right ? current_node->right->height : -1) - (current_node->left ? current_node->left->height : -1);
     }
@@ -107,7 +103,7 @@ class splay_tree final {
 
     void splay_current_node(std::shared_ptr<tree_node> current_node) noexcept {
 
-        if (current_node == tree_root || !current_node) return;
+        if (current_node == tree_root or !current_node) return;
 
         /* zig */
         if (current_node->parent == tree_root) {
@@ -121,64 +117,56 @@ class splay_tree final {
         }
 
         /* zig zig (right right) */
-        else if (current_node->parent->left == current_node && current_node->parent->parent->left == current_node->parent) {
+        else if (current_node->parent->left == current_node and current_node->parent->parent->left == current_node->parent) {
             if (current_node->parent->parent == tree_root) {
                 tree_root = right_rotation(tree_root);
                 tree_root = right_rotation(tree_root);
-                return;
             }
             else {
                 current_node->parent = right_rotation(current_node->parent->parent);
                 current_node = right_rotation(current_node->parent);
                 splay_current_node(current_node);
-                return;
             }
         }
 
         /* zag zag (left left) */
-        else if (current_node->parent->right == current_node && current_node->parent->parent->right == current_node->parent) {
+        else if (current_node->parent->right == current_node and current_node->parent->parent->right == current_node->parent) {
             if (current_node->parent->parent == tree_root) {
                 tree_root = left_rotation(tree_root);
                 tree_root = left_rotation(tree_root);
-                return;
             }
             else {
                 current_node->parent = left_rotation(current_node->parent->parent);
                 current_node = left_rotation(current_node->parent);
                 splay_current_node(current_node);
-                return;
             }
         }
 
         /* zig zag (right left) */
-        else if (current_node->parent->left == current_node && current_node->parent->parent->right == current_node->parent) {
+        else if (current_node->parent->left == current_node and current_node->parent->parent->right == current_node->parent) {
 
             current_node = right_rotation(current_node->parent);
 
             if (current_node->parent == tree_root) {
                 tree_root = left_rotation(tree_root);
-                return;
             }
             else {
                 current_node = left_rotation(current_node->parent);
                 splay_current_node(current_node);
-                return;
             }
         }
 
         /* zag zig (left right) */
-        else if (current_node->parent->right == current_node && current_node->parent->parent->left == current_node->parent) {
+        else if (current_node->parent->right == current_node and current_node->parent->parent->left == current_node->parent) {
 
             current_node = left_rotation(current_node->parent);
 
             if (current_node->parent == tree_root) {
                 tree_root = right_rotation(tree_root);
-                return;
             }
             else {
                 current_node = right_rotation(current_node->parent);
                 splay_current_node(current_node);
-                return;
             }
         }
 
@@ -211,21 +199,83 @@ class splay_tree final {
         if (current_node) update_node_height(current_node); 
     }
 
-    void delete_lndoe_inks(std::shared_ptr<tree_node> current_node) noexcept {
+    std::shared_ptr<value_type> search_node_by_value(std::shared_ptr<tree_node> &current_node, key_type &key)  {
+
+        if (current_node->key == key) [[likely]] {
+            splay_current_node(current_node);
+            std::shared_ptr<value_type> result = std::make_shared<value_type>(tree_root->value);
+            return result;
+        }
+        if ((!current_node->left and key < current_node->key) or (!current_node->right and key > current_node->key)) [[unlikely]] {
+            splay_current_node(current_node);
+            return nullptr;
+        }
+        else if (key < current_node->key) return search_node_by_value(current_node->left, key);
+        else return search_node_by_value(current_node->right, key);
+    }
+
+
+    void splay_delete(std::shared_ptr<tree_node>& current_node, key_type &key) noexcept {
+
+        if ((!current_node->left and key < current_node->key) or (!current_node->right and key > current_node->key)) {
+            splay_current_node(current_node);
+        }
+        
+        else if (key < current_node->key) splay_delete(current_node->left, key);
+        else if (key > current_node->key) splay_delete(current_node->right, key);
+        else {
+            if (!current_node->right and !current_node->left) {
+                std::shared_ptr<tree_node> current_parent = current_node->parent;
+                current_node = nullptr;
+                splay_current_node(current_parent);
+            }
+            else if (!current_node->right or !current_node->left) {
+                if (!current_node->right) {
+                    std::shared_ptr<tree_node> current_parent = current_node->parent;
+                    current_node = current_node->left;
+                    current_node->parent = current_parent;
+                    splay_current_node(current_node->parent);
+                }
+                else {
+                    std::shared_ptr<tree_node> current_parent = current_node->parent;
+                    current_node = current_node->right;
+                    current_node->parent = current_parent;
+                    splay_current_node(current_node->parent);
+                }
+            }
+            else {
+                std::shared_ptr<tree_node> max_of_mins = recursion_get_max_pair(current_node->left);
+                current_node->key = max_of_mins->key;
+                current_node->value = max_of_mins->value;
+                splay_delete(current_node->left, max_of_mins->key);
+            }
+        }
+    }
+
+    void delete_shared_inks(std::shared_ptr<tree_node> current_node) noexcept {
         if (!current_node) return;
-        delete_lndoe_inks(current_node->left);
+        delete_shared_inks(current_node->left);
         current_node->parent.~shared_ptr();
-        delete_lndoe_inks(current_node->right);
+        delete_shared_inks(current_node->right);
     }
 
     public:
+
         splay_tree(void) = default;
         ~splay_tree(void) noexcept {
             std::shared_ptr<tree_node> current_node = tree_root;
-            delete_lndoe_inks(current_node);
+            delete_shared_inks(current_node);
         }
 
+        value_type get_max() noexcept {
+            std::shared_ptr<tree_node> max_pair = rec_get_max_pair(tree_root);
+            return max_pair->value;
+        }
 
+        value_type get_min() noexcept {
+            std::shared_ptr<tree_node> min_pair = rec_get_min_pair(tree_root);
+            return min_pair->value;
+        }
 
         splay_tree& order_print() noexcept {
             if (tree_root == nullptr) {
@@ -267,6 +317,21 @@ class splay_tree final {
             return *this;
         }
 
+        splay_tree& erase(key_type key) noexcept {
+            splay_delete(tree_root, key);
+            tree_size--;
+            return *this;
+        }
+        
+        value_type search(key_type key) {
+            std::shared_ptr<value_type> result = search_node_by_value(tree_root, key);
+            if (!result) {
+                std::cout << "ATTENTION --> Key " + std::to_string(key) + " is not in the tree!" << std::endl;
+                return value_type();
+            }
+            return *result;
+        }
+
         friend std::ostream& operator<<(std::ostream &stream, splay_tree &tree_object) noexcept {
             if (tree_object.tree_root == nullptr) {
                 std::cout << "nullptr";
@@ -275,8 +340,12 @@ class splay_tree final {
             tree_object.order_print();
             return stream;
         }
-        
-        inline std::size_t get_size() noexcept {
+
+        value_type operator[](key_type key) noexcept {
+            return search(key);
+        }
+
+        [[nodiscard]] std::size_t get_size() noexcept {
             return tree_size;
         }
 };
