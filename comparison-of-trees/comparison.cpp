@@ -4,7 +4,6 @@
 # include <iostream>
 # include <splay-tree/tree.hpp>
 # include <binary-tree/tree.hpp>
-# include <two_three_tree/tree.hpp>
 # include <red-black-tree/tree.hpp>
 # include <avl-binary-tree/tree.hpp>
 
@@ -14,6 +13,7 @@ int main(int argc, char **argv) {
     binary_tree<std::int64_t, std::string> bin_tree;
     splay_tree<std::int64_t, std::string> splay_bin_tree;
     avl_binary_tree<std::int64_t, std::string> avl_bin_tree;
+    red_black_tree<std::int64_t, std::string> red_black_bin_tree;
 
     std::vector<std::int64_t> vector = {100, 50, 150, 25, 55, 175, 125, 300, 1000};
 
@@ -21,6 +21,7 @@ int main(int argc, char **argv) {
         bin_tree.push_pair(object, std::to_string(object));
         avl_bin_tree.push_pair(object, std::to_string(object));
         splay_bin_tree.push_pair(object, std::to_string(object));
+        //red_black_bin_tree.push_pair(object, std::to_string(object));
     }
 
     std::cout << "\nWe have (1, 2, 3), where\n1 - node value\n2 - node height\n3 - node balance\n\n" << std::endl;

@@ -56,7 +56,7 @@ class binary_tree final {
         return current_node;
     }
 
-    void rec_push_pair(std::shared_ptr<tree_node> current_node, key_type key, value_type value) noexcept {
+    void rec_push_pair(std::shared_ptr<tree_node> current_node, key_type &key, value_type &value) noexcept {
         if (key < current_node->key) {
             if (current_node->left == nullptr) {
                 current_node->left = create_tree_node(key, value);

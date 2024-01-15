@@ -11,7 +11,6 @@ class splay_tree final {
     struct tree_node {
         key_type key;
         value_type value;
-        std::int8_t height;
         std::shared_ptr<tree_node> left = nullptr;
         std::shared_ptr<tree_node> right = nullptr;
         std::shared_ptr<tree_node> parent = nullptr;
@@ -19,15 +18,6 @@ class splay_tree final {
     
     std::size_t tree_size = 0;
     std::shared_ptr<tree_node> tree_root = nullptr;
-
-    void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
-        current_node->height = std::max(current_node->right == nullptr ? -1 : current_node->right->height, current_node->left == nullptr ? -1 : current_node->left->height) + 1;
-    }
-
-    std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
-        if (current_node == nullptr) return 0;
-        return (current_node->right ? current_node->right->height : -1) - (current_node->left ? current_node->left->height : -1);
-    }
 
     std::shared_ptr<tree_node> recursion_get_max_pair(std::shared_ptr<tree_node> &current_root) noexcept {
         if (current_root == nullptr) [[unlikely]] return current_root;
@@ -45,7 +35,6 @@ class splay_tree final {
         std::shared_ptr<tree_node> new_tree_node = std::make_shared<tree_node>();
         new_tree_node->key = key;
         new_tree_node->value = value;
-        new_tree_node->height = 0;
         return new_tree_node;
     }
 
@@ -172,7 +161,6 @@ class splay_tree final {
 
     }
 
-    
     void splay_insert(std::shared_ptr<tree_node> &current_node, key_type &key, value_type &value) noexcept {
 
         if (key < current_node->key) {
@@ -196,7 +184,6 @@ class splay_tree final {
             current_node->value = value;
             splay_current_node(current_node);
         }
-        if (current_node) update_node_height(current_node); 
     }
 
     std::shared_ptr<value_type> search_node_by_value(std::shared_ptr<tree_node> &current_node, key_type &key)  {
