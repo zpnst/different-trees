@@ -12,27 +12,26 @@ class avl_binary_tree final {
     struct tree_node {
         key_type key;
         value_type value; 
-        std::int8_t height;
+        std::int16_t height;
         std::shared_ptr<tree_node> left = nullptr;
         std::shared_ptr<tree_node> right = nullptr;
+
+        tree_node(key_type key, value_type value) {
+            this->height = 0;
+            this->key = key; this->value = value;
+            this->left = nullptr; this->right = nullptr;
+        }
+        ~tree_node(void) = default;
     };
 
     std::size_t tree_size = 0;
     std::shared_ptr<tree_node> tree_root = nullptr;
 
-    std::shared_ptr<tree_node> create_tree_node(key_type &key, value_type &value) noexcept {
-        std::shared_ptr<tree_node> new_tree_node = std::make_shared<tree_node>();
-        new_tree_node->key = key;
-        new_tree_node->value = value;
-        new_tree_node->height = 0;
-        return new_tree_node;
-    }
-
     void update_node_height(std::shared_ptr<tree_node> &current_node) noexcept {
         current_node->height = std::max(current_node->right == nullptr ? -1 : current_node->right->height, current_node->left == nullptr ? -1 : current_node->left->height) + 1;
     }
 
-    std::int64_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
+    std::int16_t get_node_balance(std::shared_ptr<tree_node> &current_node) noexcept {
         if (current_node == nullptr) return 0;
         return (current_node->right ? current_node->right->height : -1) - (current_node->left ? current_node->left->height : -1);
     }
@@ -104,13 +103,13 @@ class avl_binary_tree final {
     void rec_push_pair(std::shared_ptr<tree_node> &current_node, key_type &key, value_type &value) noexcept {
         if (key < current_node->key) {
             if (current_node->left == nullptr) {
-                current_node->left = create_tree_node(key, value);
+                current_node->left = std::make_shared<tree_node>(key, value);
             }
             else rec_push_pair(current_node->left, key, value);
         }
         else if (key > current_node->key) {
             if (current_node->right == nullptr) {
-                current_node->right = create_tree_node(key, value);
+                current_node->right = std::make_shared<tree_node>(key, value);
             }
             else rec_push_pair(current_node->right, key, value);  
         }
@@ -130,7 +129,7 @@ class avl_binary_tree final {
                 current_node->right == nullptr ? current_node = current_node->left : current_node = current_node->right;
             }
             else {
-                std::shared_ptr<tree_node> max_of_mins = rec_get_min_pair(current_node->left);
+                std::shared_ptr<tree_node> max_of_mins = rec_get_max_pair(current_node->left);
                 current_node->key = max_of_mins->key;
                 current_node->value = max_of_mins->value;
                 rec_delete_pair_by_key(current_node->left, max_of_mins->key);
@@ -145,7 +144,7 @@ class avl_binary_tree final {
     void recursion_print_tree(std::shared_ptr<tree_node> &current_root) noexcept {
         if (!current_root) return;
         recursion_print_tree(current_root->left);
-        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", h" << current_root->height << ", b" << get_node_balance(current_root) << ")";
+        if (current_root->value == rec_get_max_pair(tree_root)->value) std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")";
         else std::cout << "(" << current_root->value << ", " << current_root->height << ", " << get_node_balance(current_root) << ")" << " --> ";
         recursion_print_tree(current_root->right);
     }
@@ -157,7 +156,7 @@ class avl_binary_tree final {
 
         avl_binary_tree& push_pair(key_type key, value_type value) noexcept {
             if (tree_root == nullptr) [[unlikely]] {
-                std::shared_ptr<tree_node> new_tree_node = create_tree_node(key, value);
+                std::shared_ptr<tree_node> new_tree_node = std::make_shared<tree_node>(key, value);
                 tree_root = new_tree_node;
                 tree_size++;
                 return *this;
@@ -208,7 +207,7 @@ class avl_binary_tree final {
             return *this;
         }
 
-        avl_binary_tree& erase(key_type key) {
+        avl_binary_tree& delete_pair(key_type key) noexcept(false) {
             std::shared_ptr<tree_node>& correct_node = rec_search_pair_by_key(tree_root, key);
             if (correct_node == nullptr) throw std::runtime_error(std::string("ATTENTION -> There is no key " + std::to_string(key) + " in the tree!"));
             rec_delete_pair_by_key(tree_root, key);
@@ -225,7 +224,7 @@ class avl_binary_tree final {
             return stream;
         }
 
-        value_type& operator[](key_type key) {
+        value_type& operator[](key_type key) noexcept(false) {
             std::shared_ptr<tree_node>& correct_node = rec_search_pair_by_key(tree_root, key);
             if (correct_node == nullptr) throw std::runtime_error(std::string("ATTENTION -> There is no key " + std::to_string(key) + " in the tree!"));
             return serach_by_key(key);

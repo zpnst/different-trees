@@ -14,6 +14,12 @@ class splay_tree final {
         std::shared_ptr<tree_node> left = nullptr;
         std::shared_ptr<tree_node> right = nullptr;
         std::shared_ptr<tree_node> parent = nullptr;
+
+        tree_node(key_type key, value_type value) {
+            this->key = key; this->value = value;
+            this->left = nullptr; this->right = nullptr; this->parent = nullptr;
+        }
+        ~tree_node(void) = default;
     };
     
     std::size_t tree_size = 0;
@@ -31,11 +37,12 @@ class splay_tree final {
         return recursion_get_min_pair(current_root->left);
     }
 
-    std::shared_ptr<tree_node> create_tree_node(key_type &key, value_type &value) noexcept {
-        std::shared_ptr<tree_node> new_tree_node = std::make_shared<tree_node>();
-        new_tree_node->key = key;
-        new_tree_node->value = value;
-        return new_tree_node;
+    std::shared_ptr<tree_node>& rec_search_pair_by_key(std::shared_ptr<tree_node>& current_node, key_type key) noexcept {
+        if (current_node == nullptr) [[unlikely]] return current_node;
+        if (key == current_node->key) return current_node;
+        if (key < current_node->key) return rec_search_pair_by_key(current_node->left, key);
+        else if (key > current_node->key) return rec_search_pair_by_key(current_node->right, key);
+        return current_node;
     }
 
     void recursion_print_tree(std::shared_ptr<tree_node> &current_node) noexcept {
@@ -94,7 +101,6 @@ class splay_tree final {
 
         if (current_node == tree_root or !current_node) return;
 
-        /* zig */
         if (current_node->parent == tree_root) {
             if (current_node->parent->left == current_node) {
                 tree_root = right_rotation(tree_root);
@@ -102,10 +108,8 @@ class splay_tree final {
             else {
                 tree_root = left_rotation(tree_root);
             }
-        return;
+            return;
         }
-
-        /* zig zig (right right) */
         else if (current_node->parent->left == current_node and current_node->parent->parent->left == current_node->parent) {
             if (current_node->parent->parent == tree_root) {
                 tree_root = right_rotation(tree_root);
@@ -118,7 +122,6 @@ class splay_tree final {
             }
         }
 
-        /* zag zag (left left) */
         else if (current_node->parent->right == current_node and current_node->parent->parent->right == current_node->parent) {
             if (current_node->parent->parent == tree_root) {
                 tree_root = left_rotation(tree_root);
@@ -131,7 +134,6 @@ class splay_tree final {
             }
         }
 
-        /* zig zag (right left) */
         else if (current_node->parent->left == current_node and current_node->parent->parent->right == current_node->parent) {
 
             current_node = right_rotation(current_node->parent);
@@ -145,7 +147,6 @@ class splay_tree final {
             }
         }
 
-        /* zag zig (left right) */
         else if (current_node->parent->right == current_node and current_node->parent->parent->left == current_node->parent) {
 
             current_node = left_rotation(current_node->parent);
@@ -165,7 +166,7 @@ class splay_tree final {
 
         if (key < current_node->key) {
             if (!current_node->left) {
-                current_node->left = create_tree_node(key, value);
+                current_node->left = std::make_shared<tree_node>(key, value);
                 current_node->left->parent = current_node;
                 splay_current_node(current_node->left);
             }
@@ -174,7 +175,7 @@ class splay_tree final {
         }
         else if (key > current_node->key) {
             if (!current_node->right) {
-                current_node->right = create_tree_node(key, value);
+                current_node->right = std::make_shared<tree_node>(key, value);
                 current_node->right->parent = current_node;
                 splay_current_node(current_node->right);
             }
@@ -255,12 +256,12 @@ class splay_tree final {
         }
 
         value_type get_max() noexcept {
-            std::shared_ptr<tree_node> max_pair = rec_get_max_pair(tree_root);
+            std::shared_ptr<tree_node> max_pair = recursion_get_max_pair(tree_root);
             return max_pair->value;
         }
 
         value_type get_min() noexcept {
-            std::shared_ptr<tree_node> min_pair = rec_get_min_pair(tree_root);
+            std::shared_ptr<tree_node> min_pair = recursion_get_min_pair(tree_root);
             return min_pair->value;
         }
 
@@ -294,7 +295,7 @@ class splay_tree final {
 
         splay_tree& push_pair(key_type key, value_type value) noexcept {
             if (!tree_root) [[unlikely]] {
-                std::shared_ptr<tree_node> new_tree_node = create_tree_node(key, value);
+                std::shared_ptr<tree_node> new_tree_node = std::make_shared<tree_node>(key, value);
                 tree_root = new_tree_node;
                 tree_size++;
                 return *this;
@@ -304,7 +305,9 @@ class splay_tree final {
             return *this;
         }
 
-        splay_tree& erase(key_type key) noexcept {
+        splay_tree& delete_pair(key_type key) noexcept(false) {
+            std::shared_ptr<tree_node>& correct_node = rec_search_pair_by_key(tree_root, key);
+            if (correct_node == nullptr) throw std::runtime_error(std::string("ATTENTION -> There is no key " + std::to_string(key) + " in the tree!"));
             splay_delete(tree_root, key);
             tree_size--;
             return *this;
@@ -328,7 +331,9 @@ class splay_tree final {
             return stream;
         }
 
-        value_type operator[](key_type key) noexcept {
+        value_type operator[](key_type key) noexcept(false) {
+            std::shared_ptr<tree_node>& correct_node = rec_search_pair_by_key(tree_root, key);
+            if (correct_node == nullptr) throw std::runtime_error(std::string("ATTENTION -> There is no key " + std::to_string(key) + " in the tree!"));
             return search(key);
         }
 
