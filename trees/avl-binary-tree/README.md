@@ -1,4 +1,4 @@
-# AVL Binary tree
+# AVL Binary Tree
 
 The rules of the binary tree remain in the AVL tree, but node heights and balance factors are added, 
 which are calculated as the height difference of the right subtree and the left subtree.
