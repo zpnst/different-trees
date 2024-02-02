@@ -20,3 +20,7 @@ After deletion, the tree has not lost its balanced appearance,
 since the check for imbalance is checked both after insertion and after deletion.
 
 However, since the AVL tree spends a lot of resources on maintaining balancing, the [Red Black Tree](../red-black-tree/) was invented.
+
+## Links
+- https://en.wikipedia.org/wiki/AVL_tree
+- https://www.geeksforgeeks.org/introduction-to-avl-tree
