@@ -12,7 +12,7 @@ Each tree has its own characteristics, which I will not describe in detail, sinc
 In our example, we insert an array of numbers {100, 50, 150, 25, 55, 175, 125, 300, 1000}, and then we delete the values 150, 50 and 1000.
 
 What will happen to a simple search tree after all the above actions:
-<img src="https://github.com/zpnst/different-trees/assets/105946529/6183d771-7ab7-4546-81f1-de63a3915877" width="620" height="340">
+![image](https://github.com/zpnst/different-trees/assets/105946529/bdab68b3-0094-40ce-b101-9fa64948e5c2)
 
 ## Navigation
 
@@ -40,4 +40,5 @@ cd build/
 
 If you did everything right, then you will get this result:
 
-<img src="https://github.com/zpnst/different-trees/assets/105946529/3cee1e15-f021-4b26-b477-5c0adcc6d032" width="620" height="340">
+![image](https://github.com/zpnst/different-trees/assets/105946529/c68e952b-28ed-47f8-b58d-e2716e4bde29)
+
