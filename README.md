@@ -1,16 +1,17 @@
 # Implementation of various trees in C++
 ![image](https://github.com/zpnst/different-trees/assets/105946529/69fb44f1-a6a6-47ef-b55c-91d26c05cceb)
 ## The following trees are implemented in this repository:
-  1. [Binary tree](trees/binary-tree)
-  2. [AVL Binary tree](trees/avl-binary-tree)
-  3. [Splay tree](trees/splay-tree)
-  4. [Red Black tree](trees/red-black-tree)
+  1. [Binary Tree](trees/binary-tree)
+  2. [AVL Binary Tree](trees/avl-binary-tree)
+  3. [Splay Tree](trees/splay-tree)
+  4. [Red Black Tree](trees/red-black-tree)
 
 Each tree has its own characteristics, which I will not describe in detail, since countless Internet resources have done it for me.
 
-## How to draw a tree
+## How to draw a tree based on the output in the terminal
 
 You need to use the level_order_print() function.
+But do not confuse it with the order_print() function, it outputs the elements of the tree in order(from smaller to larger).
 
 ![image](https://github.com/zpnst/different-trees/assets/105946529/b7fc1008-f798-4d2b-a74f-46fef8fd53cf)
 
