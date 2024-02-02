@@ -4,7 +4,8 @@
 It allows you to find data that has been used recently faster.
 
 One of the most interesting data structures with the time complexity of searching for O(n) elements, in the worst case.                                       
-Every operation, whether it's insertion, deletion, or search, changes the structure of the tree.                                                              
+Every operation, whether it's insertion, deletion, or search, changes the structure of the tree.
+                                                              
 For example, if we are looking for an element X, then after getting the result,                                                                               
 by means of rotations that are used in the AVL Tree, X will become the root of the tree, as in the case of insertion.
 
