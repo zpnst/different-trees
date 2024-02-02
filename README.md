@@ -3,8 +3,8 @@
 ## The following trees are implemented in this repository:
   1. [Binary Tree](trees/binary-tree)
   2. [AVL Binary Tree](trees/avl-binary-tree)
-  3. [Splay Tree](trees/splay-tree)
-  4. [Red Black Tree](trees/red-black-tree)
+  3. [Red Black Tree](trees/red-black-tree)
+  4. [Splay Tree](trees/splay-tree)
 
 Each tree has its own characteristics, which I will not describe in detail, since countless Internet resources have done it for me.
 
@@ -25,13 +25,13 @@ What will happen to a simple search tree after all the above actions:
 
 ## Navigation
 
-To learn more about the implementation of each of the trees and their brief description, follow these paths (I recommend in this order):
+To learn more about the implementation of each of the trees and their brief description, follow these paths (__I recommend in this order__):
 
 ```
 trees/binary-tree
 trees/avl-binary-tree
-trees/splay-tree
 trees/red-black-tree
+trees/splay-tree
 ```
 
 Each folder will show the trees before and after deleting the items and briefly describe their properties
