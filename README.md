@@ -1,14 +1,14 @@
 # Implementation of various trees in C++
 ![image](https://github.com/zpnst/different-trees/assets/105946529/69fb44f1-a6a6-47ef-b55c-91d26c05cceb)
 ## The following trees are implemented in this repository:
-- ###### Binary tree
-- ###### AVL Binary tree
-- ###### Splay tree
-- ###### Red Black tree
+  1. [Binary tree](trees/binary-tree)
+  2. [AVL Binary tree](trees/avl-binary-tree)
+  3. [Splay tree](trees/splay-tree)
+  4. [Red Black tree](trees/red-black-tree)
 
 Each tree has its own characteristics, which I will not describe in detail, since countless Internet resources have done it for me.
-## Our example
 
+## Our example
 In our example, we insert an array of numbers {100, 50, 150, 25, 55, 175, 125, 300, 1000}, and then we delete the values 150, 50 and 1000.
 
 What will happen to a simple search tree after all the above actions:
@@ -26,6 +26,7 @@ trees/red-black-tree
 ```
 
 Each folder will show the trees before and after deleting the items and briefly describe their properties
+
 ## Assembling
 
 From the root folder "different-trees" type the following commands:
