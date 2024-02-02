@@ -299,7 +299,7 @@ class red_black_tree final {
             return min_pair->value;
         }
 
-        red_black_tree& level_order_print(void) noexcept {
+        red_black_tree& level_oreder_print(void) noexcept {
 
             std::queue<std::shared_ptr<tree_node>> node_queue;
             if (tree_root) node_queue.push(tree_root);

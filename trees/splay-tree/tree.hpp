@@ -276,7 +276,7 @@ class splay_tree final {
             return *this;
         }
 
-        splay_tree& level_order_print() noexcept {
+        splay_tree& level_oreder_print() noexcept {
 
             std::queue<std::shared_ptr<tree_node>> node_queue;
             if (tree_root) node_queue.push(tree_root);
