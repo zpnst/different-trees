@@ -37,35 +37,25 @@ int main(int argc, char **argv) {
     std::cout << "\033[1;35mOrder print:\033[0m" << std::endl;
     std::cout << bin_tree << std::endl;
     std::cout << "\033[1;35mLevel order print:\033[0m" << std::endl;
-    bin_tree.level_oreder_print();
+    bin_tree.level_order_print();
 
     std::cout << "\n\n\033[1;36mAVL Binary Tree:\033[0m\n" << std::endl;
     std::cout << "\033[1;35mOrder print:\033[0m" << std::endl;
     std::cout << avl_bin_tree << std::endl;
     std::cout << "\033[1;35mLevel order print:\033[0m" << std::endl;
-    avl_bin_tree.level_oreder_print();
+    avl_bin_tree.level_order_print();
 
     std::cout << "\n\n\033[1;36mSplay Binary Tree:\033[0m\n" << std::endl;
     std::cout << "\033[1;35mOrder print:\033[0m" << std::endl;
     std::cout << splay_bin_tree << std::endl;
     std::cout << "\033[1;35mLevel order print:\033[0m" << std::endl;
-    splay_bin_tree.level_oreder_print();
+    splay_bin_tree.level_order_print();
 
     std::cout << "\n\n\033[1;31mRed\033[0m \033[1;30mBlack\033[0m \033[1;36mBinary Tree:\033[0m\n" << std::endl;
     std::cout << "\033[1;35mOrder print:\033[0m" << std::endl;
     std::cout << red_black_bin_tree << std::endl;
     std::cout << "\033[1;35mLevel order print:\033[0m" << std::endl;
-    red_black_bin_tree.level_oreder_print();
-
-    /*
-    std::cout << "\n\nFeatures\n" << std::endl;
-
-    std::cout << "let's insert 72 into the tree\n" << std::endl;
-    splay_bin_tree.push_pair(72, "72");
-
-	std::cout << "After inserting 72, the level order printing of keys is: " << std::endl;
-	splay_bin_tree.level_oreder_print();
-    */
+    red_black_bin_tree.level_order_print();
 
     return 0;
 }

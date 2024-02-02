@@ -190,7 +190,7 @@ class avl_binary_tree final {
             return *this;
         }
 
-        avl_binary_tree& level_oreder_print() noexcept {
+        avl_binary_tree& level_order_print() noexcept {
 
             std::queue<std::shared_ptr<tree_node>> node_queue;
             if (tree_root) node_queue.push(tree_root);

@@ -143,7 +143,7 @@ class binary_tree final {
             return *this;
         }
 
-        binary_tree& level_oreder_print() noexcept {
+        binary_tree& level_order_print() noexcept {
 
             std::queue<std::shared_ptr<tree_node>> node_queue;
             if (tree_root) node_queue.push(tree_root);
