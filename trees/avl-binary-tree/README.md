@@ -12,7 +12,7 @@ As we can see, the tree has taken on a more orderly appearance, without overweig
 This is due to the right and left rotations.
 
 ## After deleting
-After deleting elements 150, 50 and 1000
+After deleting elements 150, 50 and 1000.
 
 ![image](https://github.com/zpnst/different-trees/assets/105946529/677cf4e8-b9ed-4bd4-8dde-abc258d94274)
 
