@@ -1,6 +1,6 @@
 # Red Black Tree
 
-## Properties of a red-black tree
+## Properties of a Red Black Tree
 - Each tree node is colored either red or black.
 - The root node of the tree is always black.
 - Every path from the root to any of the leaf nodes must have the same number of black nodes.
@@ -21,4 +21,7 @@ After deleting elements 150, 50 and 1000, the tree did not lose its red-black pr
 
 The black height remained also equal to 2.
 
-If you are still here, I advise you to familiarize yourself with one of the most interesting data structures - [Splay tree](../splay-tree/).
+If you are still here, I advise you to familiarize yourself with one of the most interesting data structures - [Splay Tree](../splay-tree/).
+
+## Links
+- https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
