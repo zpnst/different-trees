@@ -14,7 +14,7 @@ As we can see, the tree outweighs to the right, which has a bad effect on the sp
 ## After deleting
 After deleting elements 150, 50 and 1000, the problem does not go away.
 
-![image](https://github.com/zpnst/different-trees/assets/105946529/bdab68b3-0094-40ce-b101-9fa64948e5c2)
+![image](https://github.com/zpnst/different-trees/assets/105946529/4b3f085d-3522-436d-a7e7-c69ecca4a874)
 
 To return the logarithmic complexity, special rotations and balance factors were invented, which [AVL Binary Tree](../avl-binary-tree) contains.
 
