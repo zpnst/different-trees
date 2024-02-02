@@ -21,7 +21,7 @@ Next, simply restore the tree according to the simplest rules of a binary tree(>
 In our example, we insert an array of numbers {100, 50, 150, 25, 55, 175, 125, 300, 1000}, and then we delete the values 150, 50 and 1000.
 
 What will happen to a simple search tree after all the above actions:
-![image](https://github.com/zpnst/different-trees/assets/105946529/bdab68b3-0094-40ce-b101-9fa64948e5c2)
+![image](https://github.com/zpnst/different-trees/assets/105946529/74358117-3ad8-493b-8c10-3bb6422c4b5d)
 
 ## Navigation
 
