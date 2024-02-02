@@ -1,8 +1,8 @@
 # Binary Tree
 
 ## The simplest binary tree with only two rules behind it:
-- Larger or equal elements to the right
-- Smaller elements to the left
+- Larger or equal elements to the right(>=).
+- Smaller elements to the left(<).
   
 ## After insertion
 After inserting an array of elements {100, 50, 150, 25, 55, 175, 125, 300, 1000} the tree will take the form:
