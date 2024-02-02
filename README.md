@@ -10,9 +10,10 @@ Each tree has its own characteristics, which I will not describe in detail, sinc
 
 ## How to draw a tree
 
-![image](https://github.com/zpnst/different-trees/assets/105946529/2ce07fcc-a891-43a0-920b-a4016b838ed2)
-
 You need to use the level_order_print() function.
+
+![image](https://github.com/zpnst/different-trees/assets/105946529/b7fc1008-f798-4d2b-a74f-46fef8fd53cf)
+
 Next, simply restore the tree according to the simplest rules of a binary tree(>= - to the right, < - to the left), abstracting from the type of tree.
 
 ## Our example
