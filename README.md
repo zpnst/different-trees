@@ -25,7 +25,7 @@ What will happen to a simple search tree after all the above actions:
 
 ## Navigation
 
-To learn more about the implementation of each of the trees and their brief description, follow these paths (<u>I recommend in this order</u>):
+To learn more about the implementation of each of the trees and their brief description, follow these paths (*I recommend in this order*):
 
 ```
 trees/binary-tree
