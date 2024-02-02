@@ -16,7 +16,7 @@ After deleting elements 150, 50 and 1000, the problem does not go away.
 
 ![image](https://github.com/zpnst/different-trees/assets/105946529/bdab68b3-0094-40ce-b101-9fa64948e5c2)
 
-To return the logarithmic complexity, special rotations and balance factors were invented, which [AVL Binary tree](../avl-binary-tree) contains.
+To return the logarithmic complexity, special rotations and balance factors were invented, which [AVL Binary Tree](../avl-binary-tree) contains.
 
 ## Links
 - https://en.wikipedia.org/wiki/Binary_search_tree
